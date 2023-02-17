@@ -21,15 +21,8 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                var left_formatted:String = ""
-                if type(of: left_num) == Int {
-                    left_formatted = String(format: "%.2f", left_num)
-                }
-                else if type(of: left_num) == Double{
-                    left_formatted = String(format: "%.3f", left_num)
-                }
                
-                Text("\(left_formatted)")
+                Text("\(left_num)")
                     .padding(.horizontal, 50).padding(.vertical, 20).border(.black)
                     
                     
