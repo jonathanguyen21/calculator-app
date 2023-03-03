@@ -126,8 +126,15 @@ class ViewController: UIViewController {
     }
     
     @IBAction func equal_button(_ sender: Any) {
-        if (!workings.isEmpty && !operators.contains(String(workings.last!))) {
-            if (workings.contains("/")) {
+        if (!workings.isEmpty) {
+            
+            // if operator is at end of string remove it
+            if (operators.contains(String(workings.last!))) {
+                workings = String(workings.dropLast())
+            }
+            
+            // if division do floating point
+            if (workings.contains("/") && !workings.contains(".")) {
                 workings.insert(contentsOf: ".0", at: workings.range(of: "/")!.lowerBound)
                 let expression = NSExpression(format: workings)
                 let result = expression.expressionValue(with: nil, context: nil) as! Double
@@ -136,24 +143,10 @@ class ViewController: UIViewController {
                 calculator_input.text = final_result
             }
             else {
-                let expression = NSExpression(format: workings)
-                let result = expression.expressionValue(with: nil, context: nil) as! Double
-                let final_result = format_value(value: result)
-                workings = final_result
-                calculator_input.text = final_result
-            }
-        }
-        else if (operators.contains(String(workings.last!))) {
-            workings = String(workings.dropLast())
-            if (workings.contains("/")) {
-                workings.insert(contentsOf: ".0", at: workings.range(of: "/")!.lowerBound)
-                let expression = NSExpression(format: workings)
-                let result = expression.expressionValue(with: nil, context: nil) as! Double
-                let final_result = format_value(value: result)
-                workings = final_result
-                calculator_input.text = final_result
-            }
-            else {
+                // if . is at end of string add 0 to finish calculation
+                if (String(workings.last!) == ".") {
+                    workings += "0"
+                }
                 let expression = NSExpression(format: workings)
                 let result = expression.expressionValue(with: nil, context: nil) as! Double
                 let final_result = format_value(value: result)
