@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 
 class ViewController: UIViewController {
 
@@ -54,7 +55,7 @@ class ViewController: UIViewController {
     let operators = ["/", "*", "-", "+"]
     
     @IBAction func divide_button(_ sender: Any) {
-        if (!operators.contains(String(workings.last!)) && !workings.isEmpty) {
+        if (workings.isEmpty == false && !operators.contains(String(workings.last!))) {
             add_to_workings(value: "/")
         }
     }
@@ -73,7 +74,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func mutiply_button(_ sender: Any) {
-        if (!operators.contains(String(workings.last!)) && !workings.isEmpty) {
+        if (workings.isEmpty == false && !operators.contains(String(workings.last!))) {
             add_to_workings(value: "*")
         }
     }
@@ -91,7 +92,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func minus_button(_ sender: Any) {
-        if (!operators.contains(String(workings.last!)) && !workings.isEmpty) {
+        if (workings.isEmpty == false && !operators.contains(String(workings.last!))) {
             add_to_workings(value: "-")
         }
     }
@@ -109,7 +110,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func addition_button(_ sender: Any) {
-        if (!operators.contains(String(workings.last!)) && !workings.isEmpty) {
+        if (workings.isEmpty == false && !operators.contains(String(workings.last!))) {
             add_to_workings(value: "+")
         }
     }
@@ -126,19 +127,39 @@ class ViewController: UIViewController {
     
     @IBAction func equal_button(_ sender: Any) {
         if (!workings.isEmpty && !operators.contains(String(workings.last!))) {
-            let expression = NSExpression(format: workings)
-            let result = expression.expressionValue(with: nil, context: nil) as! Double
-            let final_result = format_value(value: result)
-            workings = final_result
-            calculator_input.text = final_result
+            if (workings.contains("/")) {
+                workings.insert(contentsOf: ".0", at: workings.range(of: "/")!.lowerBound)
+                let expression = NSExpression(format: workings)
+                let result = expression.expressionValue(with: nil, context: nil) as! Double
+                let final_result = format_value(value: result)
+                workings = final_result
+                calculator_input.text = final_result
+            }
+            else {
+                let expression = NSExpression(format: workings)
+                let result = expression.expressionValue(with: nil, context: nil) as! Double
+                let final_result = format_value(value: result)
+                workings = final_result
+                calculator_input.text = final_result
+            }
         }
         else if (operators.contains(String(workings.last!))) {
             workings = String(workings.dropLast())
-            let expression = NSExpression(format: workings)
-            let result = expression.expressionValue(with: nil, context: nil) as! Double
-            let final_result = format_value(value: result)
-            workings = final_result
-            calculator_input.text = final_result
+            if (workings.contains("/")) {
+                workings.insert(contentsOf: ".0", at: workings.range(of: "/")!.lowerBound)
+                let expression = NSExpression(format: workings)
+                let result = expression.expressionValue(with: nil, context: nil) as! Double
+                let final_result = format_value(value: result)
+                workings = final_result
+                calculator_input.text = final_result
+            }
+            else {
+                let expression = NSExpression(format: workings)
+                let result = expression.expressionValue(with: nil, context: nil) as! Double
+                let final_result = format_value(value: result)
+                workings = final_result
+                calculator_input.text = final_result
+            }
         }
         
     }
