@@ -51,8 +51,12 @@ class ViewController: UIViewController {
         calculator_input.text = workings
     }
     
+    let operators = ["/", "*", "-", "+"]
+    
     @IBAction func divide_button(_ sender: Any) {
-        add_to_workings(value: "/")
+        if (!operators.contains(String(workings.last!))) {
+            add_to_workings(value: "/")
+        }
     }
     
     @IBAction func seven_button(_ sender: Any) {
@@ -69,7 +73,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func mutiply_button(_ sender: Any) {
-        add_to_workings(value: "*")
+        if (!operators.contains(String(workings.last!))) {
+            add_to_workings(value: "*")
+        }
     }
     
     @IBAction func four_button(_ sender: Any) {
@@ -85,7 +91,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func minus_button(_ sender: Any) {
-        add_to_workings(value: "-")
+        if (!operators.contains(String(workings.last!))) {
+            add_to_workings(value: "-")
+        }
     }
     
     @IBAction func one_button(_ sender: Any) {
@@ -101,7 +109,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func addition_button(_ sender: Any) {
-        add_to_workings(value: "+")
+        if (!operators.contains(String(workings.last!))) {
+            add_to_workings(value: "+")
+        }
     }
     
     @IBAction func decimal_button(_ sender: Any) {
@@ -115,10 +125,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func equal_button(_ sender: Any) {
-        if (workings.isEmpty) {
-            
-        }
-        else {
+        if (!workings.isEmpty) {
             let expression = NSExpression(format: workings)
             let result = expression.expressionValue(with: nil, context: nil) as! Double
             let final_result = format_value(value: result)
