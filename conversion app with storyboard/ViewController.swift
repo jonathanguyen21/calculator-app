@@ -52,7 +52,7 @@ class ViewController: UIViewController {
         calculator_input.text = workings
     }
     
-    let operators = ["/", "*", "-", "+"]
+    let operators = ["/", "*", "-", "+", "."]
     
     @IBAction func divide_button(_ sender: Any) {
         if (workings.isEmpty == false && !operators.contains(String(workings.last!))) {
