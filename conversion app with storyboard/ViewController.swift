@@ -54,7 +54,7 @@ class ViewController: UIViewController {
     let operators = ["/", "*", "-", "+"]
     
     @IBAction func divide_button(_ sender: Any) {
-        if (!operators.contains(String(workings.last!))) {
+        if (!operators.contains(String(workings.last!)) && !workings.isEmpty) {
             add_to_workings(value: "/")
         }
     }
@@ -73,7 +73,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func mutiply_button(_ sender: Any) {
-        if (!operators.contains(String(workings.last!))) {
+        if (!operators.contains(String(workings.last!)) && !workings.isEmpty) {
             add_to_workings(value: "*")
         }
     }
@@ -91,7 +91,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func minus_button(_ sender: Any) {
-        if (!operators.contains(String(workings.last!))) {
+        if (!operators.contains(String(workings.last!)) && !workings.isEmpty) {
             add_to_workings(value: "-")
         }
     }
@@ -109,7 +109,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func addition_button(_ sender: Any) {
-        if (!operators.contains(String(workings.last!))) {
+        if (!operators.contains(String(workings.last!)) && !workings.isEmpty) {
             add_to_workings(value: "+")
         }
     }
@@ -125,7 +125,15 @@ class ViewController: UIViewController {
     }
     
     @IBAction func equal_button(_ sender: Any) {
-        if (!workings.isEmpty) {
+        if (!workings.isEmpty && !operators.contains(String(workings.last!))) {
+            let expression = NSExpression(format: workings)
+            let result = expression.expressionValue(with: nil, context: nil) as! Double
+            let final_result = format_value(value: result)
+            workings = final_result
+            calculator_input.text = final_result
+        }
+        else if (operators.contains(String(workings.last!))) {
+            workings = String(workings.dropLast())
             let expression = NSExpression(format: workings)
             let result = expression.expressionValue(with: nil, context: nil) as! Double
             let final_result = format_value(value: result)
