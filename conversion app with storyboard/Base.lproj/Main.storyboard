@@ -265,14 +265,14 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L4A-Ut-OTJ">
                                 <rect key="frame" x="0.0" y="58.999999999999986" width="393" height="189.66666666666663"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U2V-U9-EwH">
-                                        <rect key="frame" x="23" y="0.0" width="141" height="190"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pm7-OR-wUz">
+                                        <rect key="frame" x="0.0" y="95" width="373" height="94.666666666666686"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="45"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bM6-sQ-RX0">
-                                        <rect key="frame" x="266" y="-1" width="74" height="190"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5+7" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OV9-Rh-u4q">
+                                        <rect key="frame" x="0.0" y="0.0" width="373" height="95"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="45"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -280,14 +280,14 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGrayColor"/>
                                 <constraints>
-                                    <constraint firstItem="U2V-U9-EwH" firstAttribute="top" secondItem="L4A-Ut-OTJ" secondAttribute="top" id="9vp-q8-CdM"/>
-                                    <constraint firstItem="bM6-sQ-RX0" firstAttribute="leading" secondItem="U2V-U9-EwH" secondAttribute="trailing" id="CVg-Em-akp"/>
-                                    <constraint firstItem="bM6-sQ-RX0" firstAttribute="height" secondItem="U2V-U9-EwH" secondAttribute="height" id="CrF-EB-3IF"/>
-                                    <constraint firstAttribute="bottom" secondItem="U2V-U9-EwH" secondAttribute="bottom" id="F04-pc-pcI"/>
-                                    <constraint firstItem="bM6-sQ-RX0" firstAttribute="top" secondItem="L4A-Ut-OTJ" secondAttribute="top" id="aGA-Mc-kYr"/>
-                                    <constraint firstAttribute="trailing" secondItem="bM6-sQ-RX0" secondAttribute="trailing" id="dVe-sy-mV2"/>
-                                    <constraint firstAttribute="bottom" secondItem="bM6-sQ-RX0" secondAttribute="bottom" id="fxO-M2-cAO"/>
-                                    <constraint firstItem="U2V-U9-EwH" firstAttribute="leading" secondItem="L4A-Ut-OTJ" secondAttribute="leading" id="kYv-wB-baL"/>
+                                    <constraint firstAttribute="trailing" secondItem="Pm7-OR-wUz" secondAttribute="trailing" constant="20" id="1vL-xI-B55"/>
+                                    <constraint firstItem="OV9-Rh-u4q" firstAttribute="leading" secondItem="L4A-Ut-OTJ" secondAttribute="leading" id="7JQ-uB-8Dh"/>
+                                    <constraint firstItem="Pm7-OR-wUz" firstAttribute="height" secondItem="OV9-Rh-u4q" secondAttribute="height" id="CZd-L1-ooR"/>
+                                    <constraint firstItem="OV9-Rh-u4q" firstAttribute="top" secondItem="L4A-Ut-OTJ" secondAttribute="top" id="X6x-uq-aMD"/>
+                                    <constraint firstItem="Pm7-OR-wUz" firstAttribute="leading" secondItem="L4A-Ut-OTJ" secondAttribute="leading" id="bao-MH-zuR"/>
+                                    <constraint firstAttribute="bottom" secondItem="Pm7-OR-wUz" secondAttribute="bottom" id="crw-EK-ScQ"/>
+                                    <constraint firstItem="Pm7-OR-wUz" firstAttribute="top" secondItem="OV9-Rh-u4q" secondAttribute="bottom" id="reH-Qc-1tR"/>
+                                    <constraint firstAttribute="trailing" secondItem="OV9-Rh-u4q" secondAttribute="trailing" constant="20" id="unB-gm-D9R"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -305,8 +305,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="calculator_input" destination="U2V-U9-EwH" id="DB3-ZU-jmb"/>
-                        <outlet property="calculator_output" destination="bM6-sQ-RX0" id="VMv-uw-SUW"/>
+                        <outlet property="calculator_input" destination="OV9-Rh-u4q" id="PVw-ZR-Gto"/>
+                        <outlet property="calculator_output" destination="Pm7-OR-wUz" id="OdS-d9-ixt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

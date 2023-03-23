@@ -56,6 +56,16 @@ class ViewController: UIViewController {
     
     @IBAction func divide_button(_ sender: Any) {
         if (workings.isEmpty == false && !operators.contains(String(workings.last!))) {
+            if (contains_operators(value: workings)) {
+                equal_button(self)
+                add_to_workings(value: "/")
+            }
+            else {
+                add_to_workings(value: "/")
+            }
+        }
+        else if (operators.contains(String(workings.last!))) {
+            delete_button(self)
             add_to_workings(value: "/")
         }
     }
@@ -75,6 +85,16 @@ class ViewController: UIViewController {
     
     @IBAction func mutiply_button(_ sender: Any) {
         if (workings.isEmpty == false && !operators.contains(String(workings.last!))) {
+            if (contains_operators(value: workings)) {
+                equal_button(self)
+                add_to_workings(value: "*")
+            }
+            else {
+                add_to_workings(value: "*")
+            }
+        }
+        else if (operators.contains(String(workings.last!))) {
+            delete_button(self)
             add_to_workings(value: "*")
         }
     }
@@ -93,6 +113,16 @@ class ViewController: UIViewController {
     
     @IBAction func minus_button(_ sender: Any) {
         if (workings.isEmpty == false && !operators.contains(String(workings.last!))) {
+            if (contains_operators(value: workings)) {
+                equal_button(self)
+                add_to_workings(value: "-")
+            }
+            else {
+                add_to_workings(value: "-")
+            }
+        }
+        else if (operators.contains(String(workings.last!))) {
+            delete_button(self)
             add_to_workings(value: "-")
         }
     }
@@ -110,12 +140,42 @@ class ViewController: UIViewController {
     }
     
     @IBAction func addition_button(_ sender: Any) {
-        if (workings.isEmpty == false && !operators.contains(String(workings.last!))) {
+        let check = !operators.contains(String(workings.last!))
+        if (workings.isEmpty == false && check) {
+            if (contains_operators(value: workings)) {
+                equal_button(self)
+                add_to_workings(value: "+")
+            }
+            else {
+                add_to_workings(value: "+")
+            }
+        }
+        else if (operators.contains(String(workings.last!))) {
+            delete_button(self)
             add_to_workings(value: "+")
         }
     }
     
+    //Checks if a string contains any operators
+    func contains_operators(value: String) -> Bool {
+        if (value.contains(String("+"))) {
+            return true
+        }
+        else if (value.contains(String("-"))) {
+            return true
+        }
+        else if (value.contains(String("*"))) {
+            return true
+        }
+        else if (value.contains(String("/"))) {
+            return true
+        }
+        return false
+    }
+    
     @IBAction func decimal_button(_ sender: Any) {
+        //let decimal_check =  workings.components(separatedBy:".")
+        //let decimal_count = decimal_check.count - 1
         if (!workings.contains(".")) {
             add_to_workings(value: ".")
         }
@@ -141,6 +201,7 @@ class ViewController: UIViewController {
                 let final_result = format_value(value: result)
                 workings = final_result
                 calculator_input.text = final_result
+                calculator_output.text = final_result
             }
             else {
                 // if . is at end of string add 0 to finish calculation
@@ -152,6 +213,7 @@ class ViewController: UIViewController {
                 let final_result = format_value(value: result)
                 workings = final_result
                 calculator_input.text = final_result
+                calculator_output.text = final_result
             }
         }
         
