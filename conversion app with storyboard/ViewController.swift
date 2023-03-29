@@ -8,6 +8,12 @@
 import UIKit
 import Foundation
 
+extension String {
+    func numberOfOccurrencesOf(string: String) -> Int {
+        return self.components(separatedBy:string).count - 1
+    }
+}
+
 class ViewController: UIViewController {
 
     
@@ -22,6 +28,8 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         clear()
     }
+    
+    
     
     func clear() {
         
@@ -52,11 +60,11 @@ class ViewController: UIViewController {
         calculator_input.text = workings
     }
     
-    let operators = ["/", "*", "-", "+", "."]
+    let operators = ["/", "*", "-", "+"]
     
     @IBAction func divide_button(_ sender: Any) {
         if (workings.isEmpty == false && !operators.contains(String(workings.last!))) {
-            if (contains_operators(value: workings)) {
+            if (contains_operators(value: workings) != "false") {
                 equal_button(self)
                 add_to_workings(value: "/")
             }
@@ -64,7 +72,12 @@ class ViewController: UIViewController {
                 add_to_workings(value: "/")
             }
         }
-        else if (operators.contains(String(workings.last!))) {
+        else if (workings.isEmpty == false && operators.contains(String(workings.last!))) {
+            if (String(workings.last!).numberOfOccurrencesOf(string: ".") > 0) {
+                equal_button(self)
+                add_to_workings(value: "+")
+                return
+            }
             delete_button(self)
             add_to_workings(value: "/")
         }
@@ -85,7 +98,7 @@ class ViewController: UIViewController {
     
     @IBAction func mutiply_button(_ sender: Any) {
         if (workings.isEmpty == false && !operators.contains(String(workings.last!))) {
-            if (contains_operators(value: workings)) {
+            if (contains_operators(value: workings) != "false") {
                 equal_button(self)
                 add_to_workings(value: "*")
             }
@@ -93,7 +106,12 @@ class ViewController: UIViewController {
                 add_to_workings(value: "*")
             }
         }
-        else if (operators.contains(String(workings.last!))) {
+        else if (workings.isEmpty == false && operators.contains(String(workings.last!))) {
+            if (String(workings.last!).numberOfOccurrencesOf(string: ".") > 0) {
+                equal_button(self)
+                add_to_workings(value: "*")
+                return
+            }
             delete_button(self)
             add_to_workings(value: "*")
         }
@@ -113,7 +131,7 @@ class ViewController: UIViewController {
     
     @IBAction func minus_button(_ sender: Any) {
         if (workings.isEmpty == false && !operators.contains(String(workings.last!))) {
-            if (contains_operators(value: workings)) {
+            if (contains_operators(value: workings) != "false") {
                 equal_button(self)
                 add_to_workings(value: "-")
             }
@@ -121,7 +139,12 @@ class ViewController: UIViewController {
                 add_to_workings(value: "-")
             }
         }
-        else if (operators.contains(String(workings.last!))) {
+        else if (workings.isEmpty == false && operators.contains(String(workings.last!))) {
+            if (String(workings.last!).numberOfOccurrencesOf(string: ".") > 0) {
+                equal_button(self)
+                add_to_workings(value: "-")
+                return
+            }
             delete_button(self)
             add_to_workings(value: "-")
         }
@@ -140,9 +163,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func addition_button(_ sender: Any) {
-        let check = !operators.contains(String(workings.last!))
-        if (workings.isEmpty == false && check) {
-            if (contains_operators(value: workings)) {
+        if (workings.isEmpty == false && !operators.contains(String(workings.last!))) {
+            if (contains_operators(value: workings) != "false") {
                 equal_button(self)
                 add_to_workings(value: "+")
             }
@@ -150,34 +172,49 @@ class ViewController: UIViewController {
                 add_to_workings(value: "+")
             }
         }
-        else if (operators.contains(String(workings.last!))) {
+        else if (workings.isEmpty == false && operators.contains(String(workings.last!))) {
+            if (String(workings.last!).numberOfOccurrencesOf(string: ".") > 0) {
+                equal_button(self)
+                add_to_workings(value: "+")
+                return
+            }
             delete_button(self)
             add_to_workings(value: "+")
         }
     }
     
     //Checks if a string contains any operators
-    func contains_operators(value: String) -> Bool {
+    // Returns operator if it contains it, the string "false" otherwise
+    func contains_operators(value: String) -> String {
         if (value.contains(String("+"))) {
-            return true
+            return "+"
         }
         else if (value.contains(String("-"))) {
-            return true
+            return "-"
         }
         else if (value.contains(String("*"))) {
-            return true
+            return "*"
         }
         else if (value.contains(String("/"))) {
-            return true
+            return "/"
         }
-        return false
+        return "false"
     }
     
     @IBAction func decimal_button(_ sender: Any) {
-        //let decimal_check =  workings.components(separatedBy:".")
-        //let decimal_count = decimal_check.count - 1
+        let contains_operator = contains_operators(value: workings)
         if (!workings.contains(".")) {
             add_to_workings(value: ".")
+        }
+        else if (contains_operator != "false") {
+            
+            // Splits equation into two from the operator
+            // then checks if second half of equation contains a "."
+            // if not it adds one decimal to it
+            let separated_equation = workings.components(separatedBy: contains_operator)
+            if (separated_equation[1].numberOfOccurrencesOf(string: ".") == 0) {
+                add_to_workings(value: ".")
+            }
         }
     }
     
