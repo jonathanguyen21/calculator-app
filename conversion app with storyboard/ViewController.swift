@@ -243,7 +243,17 @@ class ViewController: UIViewController {
             else {
                 // if . is at end of string add 0 to finish calculation
                 if (String(workings.last!) == ".") {
-                    workings += "0"
+                    let contains_operator = contains_operators(value: workings)
+                    if (contains_operator == "/" || contains_operator == "*") {
+                        let tok = workings.components(separatedBy: contains_operator)
+                        if (tok[1] == ".") {
+                            workings = String(workings.dropLast())
+                            workings = String(workings.dropLast())
+                        }
+                    }
+                    else {
+                        workings += "0"
+                    }
                 }
                 let expression = NSExpression(format: workings)
                 let result = expression.expressionValue(with: nil, context: nil) as! Double
