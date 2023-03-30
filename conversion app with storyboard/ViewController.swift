@@ -14,6 +14,46 @@ extension String {
     }
 }
 
+struct Response: Codable {
+    let data: MyResult
+}
+
+struct MyResult: Codable {
+    let AUD: Double
+    let BGN: Double
+    let BRL: Double
+    let CAD: Double
+    let CHF: Double
+    let CNY: Double
+    let CZK: Double
+    let DKK: Double
+    let EUR: Double
+    let GBP: Double
+    let HKD: Double
+    let HRK: Double
+    let HUF: Double
+    let IDR: Double
+    let ILS: Double
+    let INR: Double
+    let ISK: Double
+    let JPY: Double
+    let KRW: Double
+    let MXN: Double
+    let MYR: Double
+    let NOK: Double
+    let NZD: Double
+    let PHP: Double
+    let PLN: Double
+    let RON: Double
+    let RUB: Double
+    let SEK: Double
+    let SGD: Double
+    let THB: Double
+    let TRY: Double
+    let USD: Double
+    let ZAR: Double
+}
+
 class ViewController: UIViewController {
 
     
@@ -26,10 +66,47 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        // Loading API and getting values
+        let url = "https://api.freecurrencyapi.com/v1/latest?apikey=tcPxuKBrEc5u6hyPql8RrXVfSDfFQvmCbHPAYhzQ"
+        getData(from: url)
+        
+        // Sets up variables to hold values
         clear()
     }
     
-    
+    // Uses api and loads data into variables
+    private func getData(from url: String) {
+        
+        let task = URLSession.shared.dataTask(with: URL(string: url)!, completionHandler: {data, response, error in
+            
+            guard let data = data, error == nil else {
+                print("something went wrong")
+                return
+            }
+            
+            // have data
+            var result: Response?
+            do {
+                result = try JSONDecoder().decode(Response.self, from: data)
+            }
+            catch {
+                print("failed to convert")
+                print(error)
+            }
+            
+            guard let json = result else {
+                return
+            }
+            
+            print(json.data.USD)
+            print(json.data.CAD)
+            print(json.data.BGN)
+        })
+            
+        task.resume()
+        
+    }
     
     func clear() {
         
