@@ -52,18 +52,16 @@ struct MyResult: Codable {
     let TRY: Double
     let USD: Double
     let ZAR: Double
-    static let currencies = [\MyResult.AUD]
 }
  
 class ViewController: UIViewController {
  
      
     @ IBOutlet weak var calculator_input: UILabel!
-     
     @ IBOutlet weak var calculator_output: UILabel!
      
     var workings:String = ""
-    
+    var currencies: [String:String] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,7 +97,7 @@ class ViewController: UIViewController {
             guard let json = result else {
                 return
             }
-            
+
             print(json.data.USD)
             print(json.data.CAD)
             print(json.data.BGN)
