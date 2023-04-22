@@ -52,16 +52,18 @@ struct MyResult: Codable {
     let TRY: Double
     let USD: Double
     let ZAR: Double
+    static let currencies = [\MyResult.AUD]
 }
-
+ 
 class ViewController: UIViewController {
-
-    
-    @IBOutlet weak var calculator_input: UILabel!
-    
-    @IBOutlet weak var calculator_output: UILabel!
-    
+ 
+     
+    @ IBOutlet weak var calculator_input: UILabel!
+     
+    @ IBOutlet weak var calculator_output: UILabel!
+     
     var workings:String = ""
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,7 +79,6 @@ class ViewController: UIViewController {
     
     // Uses api and loads data into variables
     private func getData(from url: String) {
-        
         let task = URLSession.shared.dataTask(with: URL(string: url)!, completionHandler: {data, response, error in
             
             guard let data = data, error == nil else {
@@ -105,7 +106,6 @@ class ViewController: UIViewController {
         })
             
         task.resume()
-        
     }
     
     func clear() {
@@ -315,7 +315,11 @@ class ViewController: UIViewController {
                 let final_result = format_value(value: result)
                 workings = final_result
                 calculator_input.text = final_result
-                calculator_output.text = final_result
+                // conversion part
+                let expressionConversion = NSExpression(format: workings + "*.9")
+                let resultConversion = expressionConversion.expressionValue(with: nil, context: nil) as! Double
+                let final_result_conversion = format_value(value: resultConversion)
+                calculator_output.text = final_result_conversion
             }
             else {
                 // if . is at end of string add 0 to finish calculation
@@ -337,7 +341,11 @@ class ViewController: UIViewController {
                 let final_result = format_value(value: result)
                 workings = final_result
                 calculator_input.text = final_result
-                calculator_output.text = final_result
+                // conversion part
+                let expressionConversion = NSExpression(format: workings + "*.9")
+                let resultConversion = expressionConversion.expressionValue(with: nil, context: nil) as! Double
+                let final_result_conversion = format_value(value: resultConversion)
+                calculator_output.text = final_result_conversion
             }
         }
         
