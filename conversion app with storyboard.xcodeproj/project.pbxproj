@@ -13,6 +13,7 @@
 		60515C2E29A72D2500CBE162 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60515C2C29A72D2500CBE162 /* Main.storyboard */; };
 		60515C3029A72D2800CBE162 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60515C2F29A72D2800CBE162 /* Assets.xcassets */; };
 		60515C3329A72D2800CBE162 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60515C3129A72D2800CBE162 /* LaunchScreen.storyboard */; };
+		6079F23029F3786700777496 /* ApiData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6079F22F29F3786700777496 /* ApiData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		60515C2F29A72D2800CBE162 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		60515C3229A72D2800CBE162 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		60515C3429A72D2800CBE162 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6079F22F29F3786700777496 /* ApiData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				60515C2629A72D2500CBE162 /* AppDelegate.swift */,
 				60515C2829A72D2500CBE162 /* SceneDelegate.swift */,
 				60515C2A29A72D2500CBE162 /* ViewController.swift */,
+				6079F22F29F3786700777496 /* ApiData.swift */,
 				60515C2C29A72D2500CBE162 /* Main.storyboard */,
 				60515C2F29A72D2800CBE162 /* Assets.xcassets */,
 				60515C3129A72D2800CBE162 /* LaunchScreen.storyboard */,
@@ -138,6 +141,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6079F23029F3786700777496 /* ApiData.swift in Sources */,
 				60515C2B29A72D2500CBE162 /* ViewController.swift in Sources */,
 				60515C2729A72D2500CBE162 /* AppDelegate.swift in Sources */,
 				60515C2929A72D2500CBE162 /* SceneDelegate.swift in Sources */,

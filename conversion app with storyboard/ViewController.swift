@@ -14,45 +14,6 @@ extension String {
     }
 }
 
-struct Response: Codable {
-    let data: MyResult
-}
-
-struct MyResult: Codable {
-    let AUD: Double
-    let BGN: Double
-    let BRL: Double
-    let CAD: Double
-    let CHF: Double
-    let CNY: Double
-    let CZK: Double
-    let DKK: Double
-    let EUR: Double
-    let GBP: Double
-    let HKD: Double
-    let HRK: Double
-    let HUF: Double
-    let IDR: Double
-    let ILS: Double
-    let INR: Double
-    let ISK: Double
-    let JPY: Double
-    let KRW: Double
-    let MXN: Double
-    let MYR: Double
-    let NOK: Double
-    let NZD: Double
-    let PHP: Double
-    let PLN: Double
-    let RON: Double
-    let RUB: Double
-    let SEK: Double
-    let SGD: Double
-    let THB: Double
-    let TRY: Double
-    let USD: Double
-    let ZAR: Double
-}
  
 class ViewController: UIViewController {
  
@@ -61,50 +22,39 @@ class ViewController: UIViewController {
     @ IBOutlet weak var calculator_output: UILabel!
      
     var workings:String = ""
-    var currencies: [String:String] = [:]
+    var data = Response(data: MyResult(AUD: 1.0, BGN: 0, BRL: 0, CAD: 0, CHF: 0, CNY: 0, CZK: 0, DKK: 0, EUR: 0, GBP: 0, HKD: 0, HRK: 0, HUF: 0, IDR: 0, ILS: 0, INR: 0, ISK: 0, JPY: 0, KRW: 0, MXN: 0, MYR: 0, NOK: 0, NZD: 0, PHP: 0, PLN: 0, RON: 0, RUB: 0, SEK: 0, SGD: 0, THB: 0, TRY: 0, USD: 1, ZAR: 0))
+    var conversion = 1.0
+    
+    // trying new function
+    func getData() {
+        let urlString = "https://api.freecurrencyapi.com/v1/latest?apikey=tcPxuKBrEc5u6hyPql8RrXVfSDfFQvmCbHPAYhzQ"
+        let url = URL(string: urlString)
+        URLSession.shared.dataTask(with: url!) {data, _, error in
+            DispatchQueue.main.async {
+                if let data = data {
+                    do {
+                        let decoder = JSONDecoder()
+                        let decodedData = try decoder.decode(Response.self, from: data)
+                        self.data.data = decodedData.data
+                        print("Data Successfully Retrieved from Conversion API!")
+                    } catch {
+                        print ("Error! Something went wrong")
+                    }
+                }
+            }
+        }.resume()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         // Loading API and getting values
-        let url = "https://api.freecurrencyapi.com/v1/latest?apikey=tcPxuKBrEc5u6hyPql8RrXVfSDfFQvmCbHPAYhzQ"
-        getData(from: url)
-        
+        getData()
         // Sets up variables to hold values
         clear()
     }
     
-    // Uses api and loads data into variables
-    private func getData(from url: String) {
-        let task = URLSession.shared.dataTask(with: URL(string: url)!, completionHandler: {data, response, error in
-            
-            guard let data = data, error == nil else {
-                print("something went wrong")
-                return
-            }
-            
-            // have data
-            var result: Response?
-            do {
-                result = try JSONDecoder().decode(Response.self, from: data)
-            }
-            catch {
-                print("failed to convert")
-                print(error)
-            }
-            
-            guard let json = result else {
-                return
-            }
-
-            print(json.data.USD)
-            print(json.data.CAD)
-            print(json.data.BGN)
-        })
-            
-        task.resume()
-    }
     
     func clear() {
         
@@ -128,6 +78,7 @@ class ViewController: UIViewController {
     
     
     @IBAction func swap_button(_ sender: Any) {
+        conversion = self.data.data.AUD
     }
     
     func add_to_workings(value: String) {
@@ -314,7 +265,7 @@ class ViewController: UIViewController {
                 workings = final_result
                 calculator_input.text = final_result
                 // conversion part
-                let expressionConversion = NSExpression(format: workings + "*.9")
+                let expressionConversion = NSExpression(format: workings + "*" + String(conversion))
                 let resultConversion = expressionConversion.expressionValue(with: nil, context: nil) as! Double
                 let final_result_conversion = format_value(value: resultConversion)
                 calculator_output.text = final_result_conversion
@@ -340,7 +291,7 @@ class ViewController: UIViewController {
                 workings = final_result
                 calculator_input.text = final_result
                 // conversion part
-                let expressionConversion = NSExpression(format: workings + "*.9")
+                let expressionConversion = NSExpression(format: workings + "*" + String(conversion))
                 let resultConversion = expressionConversion.expressionValue(with: nil, context: nil) as! Double
                 let final_result_conversion = format_value(value: resultConversion)
                 calculator_output.text = final_result_conversion
