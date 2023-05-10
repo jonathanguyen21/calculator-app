@@ -4,7 +4,6 @@
 //
 //  Created by Jonathan Nguyen on 2/22/23.
 //
-
 import UIKit
 import Foundation
 
@@ -16,13 +15,27 @@ extension String {
 
  
 class ViewController: UIViewController {
- 
      
     @ IBOutlet weak var calculator_input: UILabel!
     @ IBOutlet weak var calculator_output: UILabel!
+    
+    let itemsTVC = ItemsTableViewController()
+    
+    lazy var label: UILabel = {
+                
+            let label = UILabel()
+            label.font = UIFont.systemFont(ofSize: 32)
+            label.text = "Hello World"
+            return label
+            
+        }()
+    
+    
      
     var workings:String = ""
     var data = Response(data: MyResult(AUD: 1.0, BGN: 0, BRL: 0, CAD: 0, CHF: 0, CNY: 0, CZK: 0, DKK: 0, EUR: 0, GBP: 0, HKD: 0, HRK: 0, HUF: 0, IDR: 0, ILS: 0, INR: 0, ISK: 0, JPY: 0, KRW: 0, MXN: 0, MYR: 0, NOK: 0, NZD: 0, PHP: 0, PLN: 0, RON: 0, RUB: 0, SEK: 0, SGD: 0, THB: 0, TRY: 0, USD: 1, ZAR: 0))
+    var conversionsCountry = "USD"
+    var convertedCountry = "USD"
     var conversion = 1.0
     
     // trying new function
@@ -45,6 +58,7 @@ class ViewController: UIViewController {
         }.resume()
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -53,7 +67,41 @@ class ViewController: UIViewController {
         getData()
         // Sets up variables to hold values
         clear()
+        
+        // Modal
+        
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        var config = UIButton.Configuration.filled()
+        config.title = "Show Sheet"
+        
+        let button = UIButton(configuration: config, primaryAction: UIAction() { _ in
+            
+            self.itemsTVC.delegate = self
+            
+            // show sheet
+            if let sheet = self.itemsTVC.sheetPresentationController {
+                // how much of screen the sheets displays on
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = true
+                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+                sheet.largestUndimmedDetentIdentifier = .medium
+            }
+            self.present(self.itemsTVC, animated: true, completion: nil)
+        })
+        
+        stackView.addArrangedSubview(button)
+        view.addSubview(stackView)
+        
+        stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -300).isActive = true
+        stackView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        //stackView.heightAnchor.constraint(equalToConstant: 400).isActive = true
     }
+    
     
     
     func clear() {
@@ -310,3 +358,14 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController: ItemsTableViewControllerDelegate {
+    func itemsTableViewControllerDidSelect(item: String) {
+
+        if let sheet = itemsTVC.sheetPresentationController {
+            sheet.animateChanges {
+                sheet.selectedDetentIdentifier = .medium
+            }
+        }
+        self.label.text = item
+    }
+}
