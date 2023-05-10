@@ -25,7 +25,7 @@ class ViewController: UIViewController {
                 
             let label = UILabel()
             label.font = UIFont.systemFont(ofSize: 32)
-            label.text = "Hello World"
+            label.text = "USD"
             return label
             
         }()
@@ -76,30 +76,35 @@ class ViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         var config = UIButton.Configuration.filled()
-        config.title = "Show Sheet"
+        config.title = "Change Currency"
         
         let button = UIButton(configuration: config, primaryAction: UIAction() { _ in
             
             self.itemsTVC.delegate = self
-            
             // show sheet
             if let sheet = self.itemsTVC.sheetPresentationController {
                 // how much of screen the sheets displays on
-                sheet.detents = [.medium(), .large()]
+                sheet.detents = [.medium()]
                 sheet.prefersGrabberVisible = true
                 sheet.prefersScrollingExpandsWhenScrolledToEdge = false
                 sheet.largestUndimmedDetentIdentifier = .medium
             }
+            if (self.itemsTVC.isModal()) {
+                return
+            }
             self.present(self.itemsTVC, animated: true, completion: nil)
         })
         
+        button.tintColor = UIColor.systemMint
+        
+        stackView.addArrangedSubview(label)
         stackView.addArrangedSubview(button)
         view.addSubview(stackView)
         
-        stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -100).isActive = true
         stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -300).isActive = true
         stackView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        //stackView.heightAnchor.constraint(equalToConstant: 400).isActive = true
+        //stackView.heightAnchor.constraint(equalToConstant: 200).isActive = true
     }
     
     
@@ -367,5 +372,6 @@ extension ViewController: ItemsTableViewControllerDelegate {
             }
         }
         self.label.text = item
+        self.dismiss(animated: true)
     }
 }
