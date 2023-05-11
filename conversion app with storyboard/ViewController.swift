@@ -130,6 +130,7 @@ class ViewController: UIViewController {
         //button.tintColor = UIColor.systemMint
         button.configuration?.buttonSize = .mini
         button2.configuration?.buttonSize = .mini
+        //button.setImage(UIImage(systemName: "pencil.circle"), for: .normal)
         
         stackView.addArrangedSubview(label1)
         stackView.addArrangedSubview(button)
