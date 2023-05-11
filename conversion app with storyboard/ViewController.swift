@@ -19,16 +19,28 @@ class ViewController: UIViewController {
     @ IBOutlet weak var calculator_input: UILabel!
     @ IBOutlet weak var calculator_output: UILabel!
     
-    let itemsTVC = ItemsTableViewController()
+    let itemsTVC = ItemsTableViewController(num: 1)
+    let itemsTVC2 = ItemsTableViewController(num: 2)
     
-    lazy var label: UILabel = {
+    lazy var label1: UILabel = {
                 
-            let label = UILabel()
-            label.font = UIFont.systemFont(ofSize: 32)
-            label.text = "USD"
-            return label
-            
-        }()
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 32)
+        label.text = "USD"
+        label.font = label.font.withSize(20)
+        //label.textColor = .white
+        return label
+    }()
+    
+    lazy var label2: UILabel = {
+                
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 32)
+        label.text = "USD"
+        label.font = label.font.withSize(20)
+        //label.textColor = .white
+        return label
+    }()
     
     
      
@@ -76,7 +88,7 @@ class ViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         var config = UIButton.Configuration.filled()
-        config.title = "Change Currency"
+        config.title = "Change"
         
         let button = UIButton(configuration: config, primaryAction: UIAction() { _ in
             
@@ -90,19 +102,44 @@ class ViewController: UIViewController {
                 sheet.largestUndimmedDetentIdentifier = .medium
             }
             if (self.itemsTVC.isModal()) {
+                self.dismiss(animated: true)
                 return
             }
             self.present(self.itemsTVC, animated: true, completion: nil)
         })
         
-        button.tintColor = UIColor.systemMint
+        // second button
+        let button2 = UIButton(configuration: config, primaryAction: UIAction() { _ in
+            
+            self.itemsTVC2.delegate = self
+            // show sheet
+            if let sheet2 = self.itemsTVC2.sheetPresentationController {
+                // how much of screen the sheets displays on
+                sheet2.detents = [.medium()]
+                sheet2.prefersGrabberVisible = true
+                sheet2.prefersScrollingExpandsWhenScrolledToEdge = false
+                sheet2.largestUndimmedDetentIdentifier = .medium
+            }
+            if (self.itemsTVC2.isModal()) {
+                self.dismiss(animated: true)
+                return
+            }
+            self.present(self.itemsTVC2, animated: true, completion: nil)
+        })
         
-        stackView.addArrangedSubview(label)
+        //button.tintColor = UIColor.systemMint
+        button.configuration?.buttonSize = .mini
+        button2.configuration?.buttonSize = .mini
+        
+        stackView.addArrangedSubview(label1)
         stackView.addArrangedSubview(button)
+        stackView.setCustomSpacing(35, after: button)
+        stackView.addArrangedSubview(label2)
+        stackView.addArrangedSubview(button2)
         view.addSubview(stackView)
         
-        stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -100).isActive = true
-        stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -300).isActive = true
+        stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -150).isActive = true
+        stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -280).isActive = true
         stackView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         //stackView.heightAnchor.constraint(equalToConstant: 200).isActive = true
     }
@@ -364,14 +401,20 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: ItemsTableViewControllerDelegate {
-    func itemsTableViewControllerDidSelect(item: String) {
+    func itemsTableViewControllerDidSelect(item: String, num: Int) {
 
         if let sheet = itemsTVC.sheetPresentationController {
             sheet.animateChanges {
                 sheet.selectedDetentIdentifier = .medium
             }
         }
-        self.label.text = item
+        if num == 1 {
+            self.label1.text = item
+        }
+        if num == 2 {
+            self.label2.text = item
+        }
+        
         self.dismiss(animated: true)
     }
 }
