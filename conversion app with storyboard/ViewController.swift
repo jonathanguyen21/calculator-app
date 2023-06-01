@@ -169,7 +169,9 @@ class ViewController: UIViewController {
     
     
     @IBAction func swap_button(_ sender: Any) {
-        conversion = self.data.data.AUD
+        let swap = label1.text;
+        label1.text = label2.text;
+        label2.text = swap;
     }
     
     func add_to_workings(value: String) {
