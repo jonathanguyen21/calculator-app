@@ -358,7 +358,7 @@ class ViewController: UIViewController {
                 workings = final_result
                 calculator_input.text = final_result
                 // conversion part
-                let expressionConversion = NSExpression(format: workings + "*" + String(conversion))
+                let expressionConversion = NSExpression(format: workings + "/" + String(data.data.USD))
                 let resultConversion = expressionConversion.expressionValue(with: nil, context: nil) as! Double
                 let final_result_conversion = format_value(value: resultConversion)
                 calculator_output.text = final_result_conversion
