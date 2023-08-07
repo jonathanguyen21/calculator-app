@@ -1,3 +1,3 @@
-# conversion_app
+# Calculator App
 
-Creating a currency conversion app
+Recreation of the calculator app on the iPhone
